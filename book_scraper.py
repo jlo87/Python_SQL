@@ -1,3 +1,5 @@
+# Using Python code to scrape data from [Books to Scrape] and then save it to a SQL database.
+
 import sqlite3, bs4, requests
 
 def scrapeBooks(productUrl):
@@ -8,15 +10,15 @@ def scrapeBooks(productUrl):
 	allBooks = [] # Create a list.
 	for book in books: # For each article that comes back, we're calling a book.
 		bookData = (getTitle(book), getPrice(book), getRating(book)) # Compile 3 pieces of data as a tuple.
-		allBooks.append(bookData) # Append
+		allBooks.append(bookData) # Append the data into our list, allBooks.
 	saveBooks(allBooks) # Pass the list into saveBooks.
 
 # Save data to SQL database.
 def saveBooks(allBooks):
 	connection = sqlite3.connect('books.db') # Connect to the database.
 	c = connection.cursor() # Create a new cursor.
-	c.execute('''CREATE TABLE books -- Comment this line and the following line out after creating the table.
-		(title TEXT, price REAL, rating INTEGER)''')
+	c.execute('''CREATE TABLE books -- Comment this line out after creating the table.
+		(title TEXT, price REAL, rating INTEGER)''') # Comment this line out after creating the table.
 	c.executemany('INSERT INTO books VALUES (?, ?, ?)', allBooks) # Insert into books.
 	connection.commit()
 	connection.close()
