@@ -6,6 +6,7 @@ conn = sqlite3.connect('my_friends.db')
 # Create cursor object.
 c = conn.cursor()
 
+# Example list of tuples.
 people = [
 	('Roald', 'Amundsen', 5),
 	('Rosa', 'Parks', 8),
@@ -13,7 +14,7 @@ people = [
 	('Neil', 'Armstrong', 7),
 	('Daniel', 'Boone', 3)]
 
-# Pass in the query and then the data from the people tuple.
+# Pass in the query and then the data from people.
 c.executemany('INSERT INTO friends VALUES (?, ?, ?)', people)
 
 # Commit change.
